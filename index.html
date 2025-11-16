@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart City Dashboard</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Leaflet MAP -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="title-wrap">
+    <h1>Smart City Dashboard</h1>
+    <p class="subtitle">Weather • Air Quality • Energy • Waste • Transport</p>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <input id="cityInput" type="search" placeholder="Search city (e.g., Delhi)" />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <label class="toggle">
+      <input type="checkbox" id="autoRefresh" /> Auto-refresh
+    </label>
+
+    <button id="themeToggle" title="Toggle theme">🌓</button>
+    <button id="settingsBtn" title="Settings">⚙</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- AQI -->
+  <section class="card">
+    <div class="card-head">
+      <h2>Air Quality</h2>
+      <div class="aqi-top">
+        <div id="aqiValue" class="aqi-number">—</div>
+        <div id="aqiCategory" class="aqi-label">—</div>
+      </div>
+    </div>
+
+    <div class="aqi-details">
+      <p>PM2.5: <b id="pm25">—</b></p>
+      <p>PM10: <b id="pm10">—</b></p>
+    </div>
+
+    <div class="chart-wrap">
+      <canvas id="aqiChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Weather -->
+  <section class="card">
+    <div class="card-head">
+      <h2>Weather</h2>
+      <p class="muted" id="locInfo">—</p>
+    </div>
+
+    <div class="weather-main">
+      <div id="temperature" class="weather-temp">—</div>
+      <div id="wind" class="weather-desc">—</div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="card">
+    <h2>Map</h2>
+    <div id="map"></div>
+  </section>
+
+  <!-- Energy -->
+  <section class="card">
+    <div class="card-head">
+      <h2>Energy Consumption</h2>
+      <div id="energyValue" class="energy-number">—</div>
+    </div>
+
+    <div class="chart-wrap small">
+      <canvas id="energyChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Waste -->
+  <section class="card">
+    <div class="card-head">
+      <h2>Waste Management</h2>
+      <div id="recyclingRate" class="waste-number">—</div>
+    </div>
+
+    <div class="chart-wrap small">
+      <canvas id="wasteChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Transport -->
+  <section class="card">
+    <h2>Public Transport</h2>
+    <div class="transport-list">
+      <p>Metro: <span id="tubeStatus" class="status-text">—</span></p>
+      <p>Buses: <span id="busesStatus" class="status-text">—</span></p>
+      <p>Bikes: <span id="bikesStatus" class="status-text">—</span></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Settings Modal (simplified: only OpenWeather key) -->
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Settings</h3>
+
+    <label>OpenWeatherMap API Key</label>
+    <input id="openWeatherKeyInput" placeholder="Paste OpenWeatherMap key (required for AQI & weather)">
+
+    <div class="modal-actions">
+      <button id="saveSettings">Save</button>
+      <button id="closeSettings">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
